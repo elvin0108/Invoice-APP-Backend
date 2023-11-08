@@ -77,13 +77,7 @@ app.post("/invoice/download/:invoiceId",async(req,res)=>{
     // console.log(billTemplate);
 
     (async () => {
-        const options = {
-            ignoreHTTPSErrors: true,
-            headless: true
-        }
-        options.executablePath = "C:\Program Files\Google\Chrome\Application\chrome.exe";
-        options.ignoreDefaultArgs = ['--disable-extensions'];
-        const browser = await puppeteer.launch(options);
+        const browser = await puppeteer.launch({headless: 'new'});
         const page = await browser.newPage();
         await page.setContent(billTemplate);
         const pdfBuffer = await page.pdf({
