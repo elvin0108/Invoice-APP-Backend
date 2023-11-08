@@ -79,7 +79,7 @@ app.post("/invoice/download/:invoiceId",async(req,res)=>{
     (async () => {
         const options = {
             ignoreHTTPSErrors: true,
-            headless: true,
+            headless: new,
         }
         options.executablePath = "C:\Program Files\Google\Chrome\Application\chrome.exe";
         options.ignoreDefaultArgs = ['--disable-extensions'];
