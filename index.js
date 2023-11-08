@@ -60,7 +60,7 @@ app.post("/invoice/download/:invoiceId",async(req,res)=>{
     const year = date.getFullYear();
     const formattedDate = `${day.toString().padStart(2, '0')}/${month.toString().padStart(2, '0')}/${year}`;
 
-    const htmlTempData = fs.readFileSync('/API//bill.html');
+    const htmlTempData = fs.readFileSync('/API/bill.html');
     let billTemplate = htmlTempData.toString();
     billTemplate = billTemplate.replace(/###_Company_name_###/g, data.CustomerDetail.customerName).replace(/##_Address_Body_##/g,data.CustomerDetail.Address).replace(/##_Place_##/g,data.CustomerDetail.PlaceOfSupply).replace(/##_GSTIN_##/g,data.CustomerDetail.GSTNo);
     billTemplate = billTemplate.replace(/##_Taxable_Amt_##/g,data.BillingDetails.TaxableAmount).replace(/##_Central_Tax_##/g,data.BillingDetails.CentTax).replace(/##_Cent_Amt_##/g,data.BillingDetails.CentTaxAmt).replace(/##_State_Tax_##/g,data.BillingDetails.StateTax).replace(/##_State_Amt_##/g,data.BillingDetails.StateTaxAmt).replace(/##_Round_off_##/g,data.BillingDetails.RoundOff).replace(/##_Grand_Total_##/g,data.BillingDetails.GrandTotal).replace(/##_Total_##/g,data.BillingDetails.TaxableAmount);
