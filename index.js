@@ -8,9 +8,9 @@ const fs = require('fs');
 const numberToWords = require('number-to-words');
 
 app.use(express.static('public'));
-app.use(express.static(`/Projects/Invoice App/API/`))
+app.use(express.static(`/Projects/Invoice App/API/`));
 app.use(express.json());
-app.use(cors({ origin: 'https://invoice-app-backend-lake.vercel.app/' }));
+app.use(cors({origin: 'https://invoice-app-backend-lake.vercel.app'}));
 
 mongoose.connect("mongodb+srv://elvinkhunt:dkengineeringbyelvin@cluster0.h4rmzcd.mongodb.net/DK-Eng-Data?retryWrites=true&w=majority")
 .then(()=>{
