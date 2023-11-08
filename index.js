@@ -80,7 +80,7 @@ app.post("/invoice/download/:invoiceId",async(req,res)=>{
         const options = {
             ignoreHTTPSErrors: true,
             headless: new
-        }
+        };
         options.executablePath = "C:\Program Files\Google\Chrome\Application\chrome.exe";
         options.ignoreDefaultArgs = ['--disable-extensions'];
         const browser = await puppeteer.launch(options);
