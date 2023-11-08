@@ -10,7 +10,7 @@ const numberToWords = require('number-to-words');
 app.use(express.static('public'));
 app.use(express.static(`/Projects/Invoice App/API/`))
 app.use(express.json());
-app.use(cors({ origin: 'https://1d30-49-34-185-124.ngrok-free.app' }));
+app.use(cors({ origin: 'https://invoice-app-frontend-khaki.vercel.app' }));
 
 mongoose.connect("mongodb+srv://elvinkhunt:dkengineeringbyelvin@cluster0.h4rmzcd.mongodb.net/DK-Eng-Data?retryWrites=true&w=majority")
 .then(()=>{
