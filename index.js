@@ -11,7 +11,7 @@ require("dotenv").config();
 app.use(express.static('public'));
 app.use(express.static(`/Projects/Invoice App/API/`));
 app.use(express.json());
-app.use(cors({origin: 'https://invoice-app-frontend-alpha.vercel.app'}));
+app.use(cors({origin: 'https://dkengineering.vercel.app'}));
 
 mongoose.connect("mongodb+srv://elvinkhunt:dkengineeringbyelvin@cluster0.h4rmzcd.mongodb.net/DK-Eng-Data?retryWrites=true&w=majority")
 .then(()=>{
