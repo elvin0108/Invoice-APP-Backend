@@ -5,6 +5,10 @@
     <style>
         body {
             font-family: Arial, sans-serif;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin: 30px;
         }
         .tb-body {
             width: 100%;
@@ -13,7 +17,7 @@
         }
         th, td {
             border: 2px solid #000;
-            padding: 8px;
+            padding: 6px;
             text-align: center;
         }
         th {
@@ -32,12 +36,12 @@
             display: flex;
             justify-content: space-between;
             align-items: center;
-            height: 15px;
+            height: 10px;
             color:aliceblue;
         }
         p.address {
             font-size: 17px;
-            line-height: 25px;
+            line-height: 22px;
             font-family: Arial, Helvetica, sans-serif;
             text-align: left;
         }
@@ -62,9 +66,15 @@
             width: 250px;
             line-height: 30px;
         }
+        .bill-data{
+            height:30px;
+        }
+        tr.bill-data:nth-child(even) {
+            background-color: #f2f2f2;
+        }
         .bill-amt{
             width: 80%;
-            line-height: 25px;
+            line-height: 20px;
         }
         .desc{
             width: 400px;
@@ -76,6 +86,7 @@
             display: flex;
             justify-content: space-between;
             align-items: center;
+            margin-top: 5px;
         }
         .sign{
             float: right;
@@ -94,6 +105,9 @@
             align-items: center;
             justify-content: space-between;
         }
+        .tbl-body{
+            min-height: 100px;
+        }
         .tbl-body tr {
             border: none;
         }
@@ -105,8 +119,6 @@
             line-height: 25px;
             font-size: 18px;
         }
-       
-        
     </style>
 </head>
 <body>
@@ -188,22 +200,22 @@
         </tr>
         <tr>
             <td colspan="3" class="td-left">
-                <h4 class="bill-amt">Bill Amount: ##_Bill_Amount_Word_##</h4>
+                <strong class="bill-amt">Bill Amount: ##_Bill_Amount_Word_##</strong>
             </td>
         </tr>
         <tr>
             <td colspan="3" class="td-left">
-                <h4>Note: </h4>
+                <strong>Note: </strong>
             </td>
             <td class="td-left" colspan="2">
-                <div class="grand-total"><h4>Grand Total: </h4><h4>##_Grand_Total_##</h4></div>
+                <div class="grand-total"><strong>Grand Total: </strong><strong>##_Grand_Total_##</strong></div>
             </td>
         </tr>
         <tr>
             <td colspan="5" class="td-left footer">
                 <div class="footer-head">
-                <h4>Tearms & Condition:</h4>
-                <h4>FOR DK ENGINEERING</h4>
+                <strong>Tearms & Condition:</strong>
+                <strong>FOR DK ENGINEERING</strong>
                 </div>
                 <p>1. Goods once sold will not be accepted.</p>
                 <p>2. Subject to rajkot jurisdiction</p>

@@ -4,7 +4,7 @@ const cors = require('cors');
 const mongoose = require('mongoose');
 const Invoice = require('./models/Invoices'); 
 const fs = require('fs');
-const numberToWords = require('number-to-words');
+const numWords = require('num-words');
 const puppeteer = require('puppeteer');
 require("dotenv").config();
 
@@ -53,7 +53,7 @@ app.post("/invoice/download/:invoiceId",async(req,res)=>{
     try {
     const fileName = data.id;
     const amount = parseFloat(data.BillingDetails.GrandTotal);
-    const amountInWords = numberToWords.toWords(amount);
+    const amountInWords = numWords(parseInt(amount));
     const amountInWordsCapitalized = amountInWords.toLowerCase().split(' ').map((word) => word.charAt(0).toUpperCase() + word.slice(1)).join(' ');
     const date = new Date();
     const day = date.getDate();
@@ -70,7 +70,10 @@ app.post("/invoice/download/:invoiceId",async(req,res)=>{
     let htmlTable = "";
     for(let i = 0 ; i<data.ProductsDetails.length; i++){
         const {productDescription, hsnCode, quantity, rate, amount} = data.ProductsDetails[i];
-        htmlTable += '<tr><td>'+productDescription+'</td><td>'+hsnCode+'</td><td>'+quantity+'</td><td>'+rate+'</td><td>'+amount+'</td></tr>';
+        htmlTable += '<tr class="bill-data"><td>'+productDescription+'</td><td>'+hsnCode+'</td><td>'+quantity+'</td><td>'+rate+'</td><td>'+amount+'</td></tr>';
+    }
+    for(let i=10; i>data.ProductsDetails.length; i--){
+        htmlTable += '<tr class="bill-data"><td></td><td></td><td></td><td></td><td></td></tr>'
     }
     billTemplate = billTemplate.replace(/##_Table_Body_##/g,htmlTable);
     // console.log(billTemplate);
