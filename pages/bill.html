@@ -8,12 +8,14 @@
             display: flex;
             justify-content: space-between;
             align-items: center;
-            margin: 30px;
+            margin: 40px;
         }
         .tb-body {
             width: 100%;
             border-collapse: collapse;
             min-width: 500px;
+            max-height: 500px;
+            overflow: auto;
         }
         th, td {
             border: 2px solid #000;
@@ -31,6 +33,8 @@
         .company-info {
             text-align: left;
             line-height: 5px;
+            padding-top: 0;
+            padding-bottom: 0;
         }
         .company-about {
             display: flex;
@@ -67,7 +71,7 @@
             line-height: 30px;
         }
         .bill-data{
-            height:30px;
+            height:28px;
         }
         tr.bill-data:nth-child(even) {
             background-color: #f2f2f2;
@@ -78,6 +82,9 @@
         }
         .desc{
             width: 400px;
+        }
+        .desc-data{
+            text-align: left;
         }
         .hsnCode{
             width: 100px;
@@ -116,8 +123,11 @@
         }
         .address-resv{
             max-width: 400px;
-            line-height: 25px;
             font-size: 18px;
+            line-height: normal;
+        }
+        .bolt-txt{
+            font-weight: bold;
         }
     </style>
 </head>
@@ -153,16 +163,16 @@
             <td class="company-info" colspan="3">
                 <h3>M/s : ###_Company_name_###</h3>
                 <p class="address-resv">##_Address_Body_##</p>
-                <h4>Place Of Supply : ##_Place_##</h4>
-                <h4>GSTIN No : ##_GSTIN_##</h4>
+                <p class="bolt-txt">Place Of Supply : ##_Place_##</h4>
+                <p class="bolt-txt">GSTIN No : ##_GSTIN_##</h4>
             </td>
             <td class="company-info" colspan="2">
-                <h4>Invoice No : ##_INV_NO_##</h4>
-                <h4>Date : ##_Date_##</h4>
-                <h4>L.r. No :</h4>
-                <h4>L.r. Date :</h4>
-                <h4>Transporter :</h4>
-                <h4>Po No :</h4>
+                <p class="bolt-txt">Invoice No : ##_INV_NO_##</h4>
+                <p class="bolt-txt">Date : ##_Date_##</h4>
+                <p class="bolt-txt">L.r. No :</h4>
+                <p class="bolt-txt">L.r. Date :</h4>
+                <p class="bolt-txt">Transporter :</h4>
+                <p class="bolt-txt">Po No :</h4>
             </td>
 
         </tr>

@@ -31,7 +31,7 @@ app.post("/invoice/create",async (req,res)=>{
     const customerName = (invoiceData.customerName).replace(/\s+/g, "").toLowerCase();
     const fiveChar = customerName.slice(0, 5).padEnd(5, 'x');
     const uniqueId = `${timestamp}-${fiveChar}`;
-    const CustomerDetail = {customerName:invoiceData.customerName,Address:invoiceData.address,PlaceOfSupply:invoiceData.placeOfSupply, GSTNo:invoiceData.gstInNo};
+    const CustomerDetail = {InvoiceNo:invoiceData.invoiceNo, Date:invoiceData.date, customerName:invoiceData.customerName, Address:invoiceData.address, PlaceOfSupply:invoiceData.placeOfSupply, GSTNo:invoiceData.gstInNo};
     const ProductsDetails = invoiceData.products;
     const BillingDetails = {TaxableAmount:invoiceData.amount,CentTax:invoiceData.centralTax,StateTax:invoiceData.stateTax,GrandTotal:invoiceData.grandTotal,RoundOff:invoiceData.roundOff, CentTaxAmt:invoiceData.centralTaxAmount, StateTaxAmt:invoiceData.stateTaxAmount}
     try{
@@ -55,24 +55,25 @@ app.post("/invoice/download/:invoiceId",async(req,res)=>{
     const amount = parseFloat(data.BillingDetails.GrandTotal);
     const amountInWords = numWords(parseInt(amount));
     const amountInWordsCapitalized = amountInWords.toLowerCase().split(' ').map((word) => word.charAt(0).toUpperCase() + word.slice(1)).join(' ');
-    const date = new Date();
-    const day = date.getDate();
-    const month = date.getMonth() + 1;
-    const year = date.getFullYear();
-    const formattedDate = `${day.toString().padStart(2, '0')}/${month.toString().padStart(2, '0')}/${year}`;
-
+    const originalDate = new Date(data.CustomerDetail.Date);
+    const day = originalDate.getDate();
+    const month = originalDate.getMonth() + 1;
+    const year = originalDate.getFullYear();
+    const formattedDay = day < 10 ? `0${day}` : day;
+    const formattedMonth = month < 10 ? `0${month}` : month;
+    const formattedDateString = `${formattedDay}/${formattedMonth}/${year}`;
     const htmlTempData = fs.readFileSync(`./pages/bill.html`);
     let billTemplate = htmlTempData.toString();
     billTemplate = billTemplate.replace(/###_Company_name_###/g, data.CustomerDetail.customerName).replace(/##_Address_Body_##/g,data.CustomerDetail.Address).replace(/##_Place_##/g,data.CustomerDetail.PlaceOfSupply).replace(/##_GSTIN_##/g,data.CustomerDetail.GSTNo);
     billTemplate = billTemplate.replace(/##_Taxable_Amt_##/g,data.BillingDetails.TaxableAmount).replace(/##_Central_Tax_##/g,data.BillingDetails.CentTax).replace(/##_Cent_Amt_##/g,data.BillingDetails.CentTaxAmt).replace(/##_State_Tax_##/g,data.BillingDetails.StateTax).replace(/##_State_Amt_##/g,data.BillingDetails.StateTaxAmt).replace(/##_Round_off_##/g,data.BillingDetails.RoundOff).replace(/##_Grand_Total_##/g,data.BillingDetails.GrandTotal).replace(/##_Total_##/g,data.BillingDetails.TaxableAmount);
-    billTemplate = billTemplate.replace(/##_Bill_Amount_Word_##/g,amountInWordsCapitalized).replace(/##_INV_NO_##/g,Date.now()).replace(/##_Date_##/g,formattedDate);
+    billTemplate = billTemplate.replace(/##_Bill_Amount_Word_##/g,amountInWordsCapitalized).replace(/##_INV_NO_##/g,data.CustomerDetail.InvoiceNo).replace(/##_Date_##/g,formattedDateString);
     
     let htmlTable = "";
     for(let i = 0 ; i<data.ProductsDetails.length; i++){
         const {productDescription, hsnCode, quantity, rate, amount} = data.ProductsDetails[i];
-        htmlTable += '<tr class="bill-data"><td>'+productDescription+'</td><td>'+hsnCode+'</td><td>'+quantity+'</td><td>'+rate+'</td><td>'+amount+'</td></tr>';
+        htmlTable += '<tr class="bill-data"><td class="desc-data">'+productDescription+'</td><td>'+hsnCode+'</td><td>'+quantity+'</td><td>'+rate+'</td><td>'+amount+'</td></tr>';
     }
-    for(let i=10; i>data.ProductsDetails.length; i--){
+    for(let i=9; i>data.ProductsDetails.length; i--){
         htmlTable += '<tr class="bill-data"><td></td><td></td><td></td><td></td><td></td></tr>'
     }
     billTemplate = billTemplate.replace(/##_Table_Body_##/g,htmlTable);
